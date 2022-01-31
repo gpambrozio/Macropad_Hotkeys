@@ -25,14 +25,14 @@ function dump(o)
 end
 
 function executeMenu(descriptor)
-    local application, parameters = string.match(descriptor, "^([^,]+),(.+)")
+    local application, parameters = descriptor:match("^([^,]+),(.+)")
     if application == nil or parameters == nil then
         return
     end
     local app = hs.appfinder.appFromName(application)
     local items = {}
-    for str in string.gmatch(parameters, "([^,]+)") do
-        table.insert(items, str)
+    for str in parameters:gmatch("([^,]+)") do
+        items:insert(str)
     end
 
     local menuItem = app:findMenuItem(items)
@@ -46,7 +46,7 @@ end
 function serialWatcher(serialPortObject, callbackType, message, hexadecimalString)
     if callbackType == "received" then
         print("message: " .. message)
-        local command, parameters = string.match(message, "^(%a+): (.+)\n")
+        local command, parameters = message:match("^(%a+): (.+)\n")
         if command ~= nil then
             if command == "menuItem" then
                 executeMenu(parameters)
@@ -83,7 +83,7 @@ function connectToUSB()
     end
 
     local portNames = hs.serial.availablePortNames()
-    table.sort(portNames)
+    portNames:sort()
     local port = portNames[#portNames]
     local path = "/dev/cu." .. port
 
@@ -98,7 +98,7 @@ hs.serial.deviceCallback(function(devices)
 end)
 
 function applicationWatcher(appName, eventType, appObject)
-    if (eventType == hs.application.watcher.activated) then
+    if eventType == hs.application.watcher.activated then
         sendToSerial("appChanged: " .. appName)
     end
 end
