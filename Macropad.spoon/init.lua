@@ -10,20 +10,6 @@ obj.license = "MIT - https://opensource.org/licenses/MIT"
 
 local serial = nil
 
--- From https://stackoverflow.com/a/27028488
-function dump(o)
-    if type(o) == 'table' then
-        local s = '{ '
-        for k,v in pairs(o) do
-            if type(k) ~= 'number' then k = '"'..k..'"' end
-            s = s .. '['..k..'] = ' .. dump(v) .. ','
-        end
-        return s .. '} '
-    else
-        return tostring(o)
-    end
-end
-
 function executeMenu(descriptor)
     local application, parameters = descriptor:match("^([^,]+),(.+)")
     if application == nil or parameters == nil then
@@ -39,7 +25,7 @@ function executeMenu(descriptor)
     if menuItem ~= nil then
         app:selectMenuItem(items)
     else
-        print("Can't find " ..  dump(items))
+        print("Can't find " ..  hs.inspect(items))
     end
 end
 
