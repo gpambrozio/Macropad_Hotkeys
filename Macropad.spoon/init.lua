@@ -5,7 +5,7 @@ obj.__index = obj
 obj.name = "Macropad"
 obj.version = "0.1"
 obj.author = "Gustavo Ambrozio <gustavo@gustavo.eng.br>"
-obj.homepage = "https://github.com/Hammerspoon/Spoons"
+obj.homepage = "https://github.com/gpambrozio/Macropad_Hotkeys/tree/master/Macropad.spoon"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
 local serial = nil
