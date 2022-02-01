@@ -52,6 +52,7 @@ end
 
 function connectToUSB()
     if serial ~= nil and serial:isOpen() then
+        print("already connected")
         return
     end
 
@@ -65,13 +66,15 @@ function connectToUSB()
     end
 
     if not found then
+        print("didn't find device")
         return
     end
 
     local portNames = hs.serial.availablePortNames()
-    portNames:sort()
+    table.sort(portNames)
     local port = portNames[#portNames]
     local path = "/dev/cu." .. port
+    print("will try to connect to " .. path)
 
     serial = hs.serial.newFromPath(path)
     serial:baudRate(115200)
@@ -79,9 +82,15 @@ function connectToUSB()
     serial:open()
 end
 
-hs.serial.deviceCallback(function(devices)
-    connectToUSB()
+diskWatcher = hs.pathwatcher.new("/Volumes", function(paths, flagTables)
+    for k, v in pairs(paths) do
+        if v == "/Volumes/CIRCUITPY" and flagTables[k]["itemCreated"] == true then
+            connectToUSB()
+            return
+        end
+    end
 end)
+diskWatcher:start()
 
 function applicationWatcher(appName, eventType, appObject)
     if eventType == hs.application.watcher.activated then
