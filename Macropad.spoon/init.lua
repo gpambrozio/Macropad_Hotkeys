@@ -18,7 +18,7 @@ function executeMenu(descriptor)
     local app = hs.appfinder.appFromName(application)
     local items = {}
     for str in parameters:gmatch("([^,]+)") do
-        items:insert(str)
+        table.insert(items, str)
     end
 
     local menuItem = app:findMenuItem(items)
