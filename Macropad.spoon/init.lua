@@ -8,7 +8,7 @@ obj.author = "Gustavo Ambrozio <gustavo@gustavo.eng.br>"
 obj.homepage = "https://github.com/gpambrozio/Macropad_Hotkeys/tree/master/Macropad.spoon"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
-local serial = nil
+obj.serial = nil
 
 function executeMenu(descriptor)
     local application, parameters = descriptor:match("^([^,]+),(.+)")
@@ -43,15 +43,15 @@ end
 
 function sendToSerial(message)
     print("sending to serial:  " .. message)
-    if serial == nil then
+    if obj.serial == nil then
         print("not connected")
         return
     end
-    serial:sendData(message .. "\n")
+    obj.serial:sendData(message .. "\n")
 end
 
 function connectToUSB()
-    if serial ~= nil and serial:isOpen() then
+    if obj.serial ~= nil and obj.serial:isOpen() then
         print("already connected")
         return
     end
@@ -76,13 +76,13 @@ function connectToUSB()
     local path = "/dev/cu." .. port
     print("will try to connect to " .. path)
 
-    serial = hs.serial.newFromPath(path)
-    serial:baudRate(115200)
-    serial:callback(serialWatcher)
-    serial:open()
+    obj.serial = hs.serial.newFromPath(path)
+    obj.serial:baudRate(115200)
+    obj.serial:callback(serialWatcher)
+    obj.serial:open()
 end
 
-diskWatcher = hs.pathwatcher.new("/Volumes", function(paths, flagTables)
+obj.diskWatcher = hs.pathwatcher.new("/Volumes", function(paths, flagTables)
     for k, v in pairs(paths) do
         if v == "/Volumes/CIRCUITPY" and flagTables[k]["itemCreated"] == true then
             connectToUSB()
@@ -90,15 +90,15 @@ diskWatcher = hs.pathwatcher.new("/Volumes", function(paths, flagTables)
         end
     end
 end)
-diskWatcher:start()
+obj.diskWatcher:start()
 
 function applicationWatcher(appName, eventType, appObject)
-    if eventType == hs.application.watcher.activated then
+    if appName ~= nil and eventType == hs.application.watcher.activated then
         sendToSerial("appChanged: " .. appName)
     end
 end
-appWatcher = hs.application.watcher.new(applicationWatcher)
-appWatcher:start()
+obj.appWatcher = hs.application.watcher.new(applicationWatcher)
+obj.appWatcher:start()
 
 function sleepEvent(event)
     events = {
@@ -119,8 +119,8 @@ function sleepEvent(event)
         sendToSerial("sleep: " .. (sleep_on_off and "on" or "off"))
     end
 end
-sleepWatcher = hs.caffeinate.watcher.new(sleepEvent)
-sleepWatcher:start()
+obj.sleepWatcher = hs.caffeinate.watcher.new(sleepEvent)
+obj.sleepWatcher:start()
 
 connectToUSB()
 
