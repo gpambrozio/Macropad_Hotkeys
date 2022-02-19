@@ -19,10 +19,12 @@ app = {                    # REQUIRED dict, must be named 'app'
         (0x000040, 'Home', [Keycode.COMMAND, 'H']),
         (0x000040, 'Private', [Keycode.COMMAND, 'N']),
         # 4th row ----------
-        (0x101010, 'Srfl', [Keycode.COMMAND, 't', -Keycode.COMMAND,
-                           'www.surfline.com/surf-report/diamond-head/5842041f4e65fad6a77088a2 \n']),
-        (0x101010, 'Snn', [Keycode.COMMAND, 't', -Keycode.COMMAND,
-                            'www.surfnewsnetwork.com \n']),
+        (0x101010, 'Srf', [Keycode.COMMAND, 't', -Keycode.COMMAND,
+                           'www.surfline.com/surf-report/diamond-head/5842041f4e65fad6a77088a2 \n',
+                           Keycode.COMMAND, 't', -Keycode.COMMAND,
+                           'www.surfnewsnetwork.com \n']),
+        (0x101010, 'Ada', [Keycode.COMMAND, 't', -Keycode.COMMAND,
+                            'blog.adafruit.com \n']),
         (0x101010, 'Hacks', [Keycode.COMMAND, 't', -Keycode.COMMAND,
                              'www.hackaday.com \n']),
         # Encoder button ---
