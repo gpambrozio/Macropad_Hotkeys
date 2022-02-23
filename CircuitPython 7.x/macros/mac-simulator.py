@@ -15,7 +15,7 @@ app = {                      # REQUIRED dict, must be named 'app'
         # 2nd row ----------
         (0x0000ff, 'Keybrd', [Keycode.SHIFT, Keycode.COMMAND, 'k']),
         (0x0000ff, 'Shake', [Keycode.CONTROL, Keycode.COMMAND, 'z']),
-        (0x000000, '', []),
+        (0x0000ff, 'Dark', [Keycode.SHIFT, Keycode.COMMAND, 'a']),
         # 3rd row ----------
         (0x000000, '', []),
         (0x000000, '', []),
