@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2021 Phillip Burgess for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
 """
 A macro/hotkey program for Adafruit MACROPAD. Macro setups are stored in the
 /macros folder (configurable below), load up just the ones you're likely to
@@ -85,7 +89,7 @@ macropad.display.show(group)
 apps_by_name = {}
 files = os.listdir(MACRO_FOLDER)
 for filename in files:
-    if filename.endswith('.py'):
+    if filename.endswith('.py') and not filename.startswith('._'):
         try:
             module = __import__(MACRO_FOLDER + '/' + filename[:-3])
             app = App(module.app)
@@ -111,7 +115,7 @@ app_index = 0
 apps[app_index].switch()
 
 
-# MAIN LOOP ---------------------------
+# MAIN LOOP ----------------------------
 
 while True:
     received_message = usb_data.readline()
