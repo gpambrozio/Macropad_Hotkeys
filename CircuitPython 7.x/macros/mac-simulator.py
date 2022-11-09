@@ -19,11 +19,11 @@ app = {                      # REQUIRED dict, must be named 'app'
         # 3rd row ----------
         (0x000000, '', []),
         (0x000000, '', []),
-        (0x000000, '', []),
-        # 4th row ----------
         (0xff0000, 'Amy', ['amy@3md.com', Keycode.TAB, "%s\n" % secrets['amy@3md.com']]),
-        (0xff0000, 'g.ambr', ['g.ambrozio@doximity.com', Keycode.TAB, "%s\n" % secrets['g.ambrozio@doximity.com']]),
-        (0x000000, '', []),
+        # 4th row ----------
+        (0xff0000, 'gambr', ['gambrozio@doximity.com', 0.1, Keycode.TAB, "%s" % secrets['gambrozio@doximity.com'], 0.1, "\n"]),
+        (0xff0000, 'g.ambr', ['g.ambrozio@doximity.com', 0.1, Keycode.TAB, "%s" % secrets['g.ambrozio@doximity.com'], 0.1, "\n"]),
+        (0xff0000, 'kwong', ['kwong+md@doximity.com', 0.1, Keycode.TAB, "%s" % secrets['kwong+md@doximity.com'], 0.1, "\n"]),
         # Encoder button ---
         (0x000000, '', [])
     ]
